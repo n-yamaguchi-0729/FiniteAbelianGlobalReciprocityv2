@@ -14,6 +14,8 @@ noncomputable section
 
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
+attribute [local instance 2000] ideleClassGroupIsMulCommutative
+
 /-- Finite abelian global reciprocity in determinant norm-quotient form. -/
 theorem finiteAbelianGlobalReciprocity_relativeNormQuotient
     (K L : Type)
