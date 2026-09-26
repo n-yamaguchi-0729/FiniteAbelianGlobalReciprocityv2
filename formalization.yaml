@@ -1,0 +1,116 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Global class field theory in Lean 4.35.0-rc2"
+  description: >-
+    For every finite abelian extension L/K of number fields, the idèle class
+    group C_K modulo the image of the idèle-class norm from C_L is isomorphic
+    as a topological multiplicative group to Gal(L/K). The Challenge defines
+    the norm as the determinant on the relative adèle algebra and descends it
+    through principal idèles; the included ClassFieldTheory development supplies
+    the proof of the resulting reciprocity theorem.
+  authors: ["Naganori Yamaguchi"]
+  responsible_maintainers: ["Naganori Yamaguchi"]
+  license: "Apache-2.0"
+
+repository:
+  role: substantive-development
+
+classification:
+  arxiv: ["math.NT"]
+  msc2020: ["11R37"]
+
+sources:
+  - title: "Class Field Theory (version 4.03)"
+    authors: ["J. S. Milne"]
+    id: "https://www.jmilne.org/math/CourseNotes/CFT.pdf"
+    type: book
+    location: >-
+      Chapter V, §5, Theorem 5.3(b), printed pp. 178–179
+      (PDF pp. 187–188)
+    relationship: formalizes
+    note: >-
+      The cited reciprocity law identifies C_K/N_{L/K}(C_L) with Gal(L/K)
+      for every finite abelian extension. The Lean declaration records the
+      resulting topological multiplicative equivalence as a nonempty type.
+
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4/tree/065356127b1dc0016f66b7283ce0ce2c4055aa55"
+    relationship: builds-on
+    note: >-
+      Mathlib supplies number fields, adèles, local completions, quotient
+      groups, topological groups, field automorphisms, and finite abelian
+      Galois extensions used by the Challenge and substantive proof.
+
+status:
+  scope: >-
+    The selected theorem is
+    ClassFieldTheory.GlobalClassFieldComparison.finiteAbelianGlobalReciprocity_relativeNormQuotient.
+    It covers finite abelian extensions of number fields and identifies C_K modulo the range of
+    the determinant norm from the relative idèle class group with Gal(L/K) as
+    a topological multiplicative group. The substantive library proves that
+    this range equals the ordinary idèle-class norm range. Nonempty records
+    existence of an equivalence rather than choosing the normalized Artin map.
+    Frobenius normalization and local compatibility are separate proved
+    declarations listed in the README. Global function fields are not included.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+
+automation:
+  methods:
+    - method: agent
+      models: ["Astra GPT-6 Codex"]
+      framework: "Codex"
+      tool_setup: >-
+        AI-assisted Lean development and maintenance of the underlying CFT
+        library, followed by statement review and preparation of this
+        source-inclusive submission. Human authorship and responsibility remain with
+        the named maintainer.
+fidelity:
+  divergences: >-
+    Milne states the result through the canonical global Artin map. The
+    compared theorem uses the canonically equivalent relative-tensor
+    presentation of C_L and retains the induced topological norm-quotient
+    equivalence but, by using Nonempty, does not select that map or include
+    its arithmetic Frobenius normalization. The development is restricted to
+    number fields.
+
+review:
+  status: "agent-reviewed"
+  reviewers: ["Codex"]
+  notes: >-
+    The determinant norm definition and theorem type were compared with the
+    included substantive source, including the proved equality with the ordinary
+    idèle-class norm range, and the statement was checked against Milne's
+    reciprocity law.
+
+alignment:
+  namespace: "ClassFieldTheory.GlobalClassFieldComparison"
+  statements:
+    - source: >-
+        J. S. Milne, Class Field Theory, Chapter V, §5, Theorem 5.3(b)
+      lean: "FiniteAbelianGlobalReciprocity.RelativeIdeleGroup.classNorm"
+      module: "Challenge"
+      status: "defined concretely in the Challenge"
+      note: >-
+        The Challenge explicitly defines the determinant norm on relative
+        idèles and descends it through principal idèles. Solution imports an
+        identical definition block before the included substantive library, so
+        Comparator checks the resulting dependency closure. There is no
+        Comparator definition hole.
+    - source: >-
+        J. S. Milne, Class Field Theory, Chapter V, §5, Theorem 5.3(b)
+      lean: "ClassFieldTheory.GlobalClassFieldComparison.finiteAbelianGlobalReciprocity_relativeNormQuotient"
+      module: "Solution"
+      status: "derived from proved declarations in the included ClassFieldTheory library"
+      note: >-
+        The Solution uses finiteAbelianGlobalReciprocity together with the
+        proved equality between the ordinary and relative norm ranges. The
+        Challenge replaces only this theorem proof with the deliberate
+        Comparator placeholder.
+
+acknowledgements: >-
+  This development builds on Lean and Mathlib. Naganori Yamaguchi is the
+  human author and responsible maintainer.
